@@ -13,7 +13,7 @@ engine = create_engine(
     # Habilitar pool y verificación de conexión
     pool_pre_ping=True,
     # Opcional: activa para ver SQL en desarrollo
-    echo=False,
+    echo=False, # Cambiar a True si quieres ver las queries en consola
 )
 
 # Crear sesión local
