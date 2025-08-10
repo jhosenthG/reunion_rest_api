@@ -1,7 +1,9 @@
+# app/models/user.py
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.database import Base
+from app.models.meeting import meeting_participants
 
 
 class User(Base):
@@ -23,7 +25,7 @@ class User(Base):
     organized_meetings = relationship("Meeting", back_populates="organizer", foreign_keys="Meeting.organizer_id")
 
     # Un usuario puede participar en muchas reuniones (many-to-many)
-    participated_meetings = relationship("Meeting", secondary="meeting_participants", back_populates="participants")
+    participated_meetings = relationship("Meeting", secondary=meeting_participants, back_populates="participants")
 
     def __repr__(self):
         return f"<User(id={self.id}, username='{self.username}', email='{self.email}')>"
