@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, validates
 from sqlalchemy.sql import func
 from app.core.database import Base
 
@@ -24,6 +24,12 @@ class Room(Base):
 
     # Relación con reuniones
     meetings = relationship("Meeting", back_populates="room")
+
+    @validates('capacity')
+    def validate_capacity(self, key, value):
+        if value < 1:
+            raise ValueError("La capacidad debe ser mayor que cero")
+        return value
 
     def __repr__(self):
         return f"<Room(id={self.id}, name='{self.name}', floor='{self.floor}')>"
