@@ -10,7 +10,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
-    is_admin: Optional[bool] = False
+    is_admin: bool = False  # ✅ Corregido: no opcional, valor por defecto False
 
 
 class UserUpdate(BaseModel):

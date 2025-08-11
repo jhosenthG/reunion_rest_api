@@ -1,4 +1,3 @@
-# app/models/user.py
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -28,4 +27,4 @@ class User(Base):
     participated_meetings = relationship("Meeting", secondary=meeting_participants, back_populates="participants")
 
     def __repr__(self):
-        return f"<User(id={self.id}, username='{self.username}', email='{self.email}')>"
+        return f"<User(id={self.id},username='{self.username}',email='{self.email}')>"

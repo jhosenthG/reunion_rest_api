@@ -1,6 +1,6 @@
-from pydantic import BaseModel
-from typing import Optional
 from datetime import datetime
+from typing import Optional
+from pydantic import BaseModel, field_validator
 
 
 class RoomBase(BaseModel):
@@ -14,6 +14,18 @@ class RoomCreate(RoomBase):
     has_whiteboard: bool = False
     has_projector: bool = False
 
+    @field_validator("capacity")
+    def validate_capacity(cls, v):
+        if v < 1:
+            raise ValueError("La capacidad debe ser mayor o igual a 1.")
+        return v
+
+    @field_validator("name")
+    def validate_name(cls, v):
+        if not v.strip():
+            raise ValueError("El nombre no puede estar vacío o ser solo espacios.")
+        return v.strip()
+
 
 class RoomUpdate(BaseModel):
     name: Optional[str] = None
@@ -23,6 +35,12 @@ class RoomUpdate(BaseModel):
     has_whiteboard: Optional[bool] = None
     has_projector: Optional[bool] = None
     is_available: Optional[bool] = None
+
+    @field_validator("capacity")
+    def validate_capacity(cls, v):
+        if v is not None and v < 1:
+            raise ValueError("La capacidad debe ser mayor o igual a 1.")
+        return v
 
 
 class RoomRead(RoomBase):

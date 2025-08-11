@@ -27,9 +27,9 @@ class Room(Base):
 
     @validates('capacity')
     def validate_capacity(self, key, value):
-        if value < 1:
-            raise ValueError("La capacidad debe ser mayor que cero")
+        if not isinstance(value, int) or value < 1:
+            raise ValueError("La capacidad debe ser un número entero mayor que cero.")
         return value
 
     def __repr__(self):
-        return f"<Room(id={self.id}, name='{self.name}', floor='{self.floor}')>"
+        return f"<Room(id={self.id},name='{self.name}',floor='{self.floor}')>"
